@@ -2,7 +2,6 @@
 name: plan
 description: Frame a data science problem and plan the approach, surfacing relevant past learnings
 argument-hint: "[problem description or business question]"
-disable-model-invocation: true
 ---
 
 # Frame Problem and Plan Approach

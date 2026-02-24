@@ -2,7 +2,6 @@
 name: experiment
 description: Design an ML experiment with hypothesis, split strategy, leakage check, and evaluation plan
 argument-hint: "[experiment description or hypothesis]"
-disable-model-invocation: true
 ---
 
 # Design and Run Experiments
