@@ -1,7 +1,7 @@
 {
   "name": "ds",
-  "version": "1.5.0",
-  "description": "Data science and ML workflow tools. 6 agents, 4 commands, 8 skills for problem framing, EDA, experimentation, and knowledge compounding.",
+  "version": "1.6.0",
+  "description": "Data science and ML workflow tools. 6 agents, 4 commands, 9 skills for problem framing, EDA, experimentation, and knowledge compounding.",
   "author": {
     "name": "Andika Rachman",
     "url": "https://github.com/andikarachman"

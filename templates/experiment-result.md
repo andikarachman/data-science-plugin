@@ -25,6 +25,17 @@ outcome: [success | failure | mixed]
 ### Key Plots
 [Description of important visualizations -- confusion matrix, PR curve, calibration plot, SHAP summary]
 
+### Time-Series Forecast Performance (if applicable)
+| Model | Order | AIC | RMSE | MAE | MAPE | vs Baseline |
+|---|---|---|---|---|---|---|
+
+### Residual Diagnostics (if applicable)
+| Test | Statistic | p-value | Result |
+|---|---|---|---|
+| Ljung-Box | | | |
+| ADF (residuals) | | | |
+| Breusch-Pagan | | | |
+
 ## Analysis
 [What worked, what didn't, why]
 

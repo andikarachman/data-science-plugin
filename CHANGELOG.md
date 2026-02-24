@@ -4,6 +4,20 @@ All notable changes to this plugin will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.6.0] - 2026-02-24
+
+### Added
+- `statsmodels` skill -- API patterns for OLS, GLM, discrete choice models, time series (ARIMA/SARIMAX), and statistical diagnostics with 5 reference files
+- Time-series experiment workflow in `/ds:experiment` -- three-way routing at step 1b (supervised/unsupervised/time-series) with conditional steps for stationarity testing, ARIMA order selection, temporal splits, and forecast evaluation
+- `/ds:experiment` now uses `statsmodels` for regression/GLM model selection (step 3), code scaffolding (step 6), and model diagnostics (step 7)
+- `/ds:eda` now uses `statsmodels` for VIF multicollinearity checks (step 7a) and stationarity testing (step 7b)
+- `/ds:plan` now uses `statsmodels` for inference/GLM/time-series approach selection (step 3)
+- Time-series fields added to `experiment-plan` and `experiment-result` templates
+
+### Changed
+- `experiment-designer` agent now supports time-series experiment framing alongside supervised and unsupervised
+- `statistical-analysis` skill "Role in ds plugin" paragraph updated to clarify boundary with `statsmodels` skill
+
 ## [1.5.0] - 2026-02-24
 
 ### Added

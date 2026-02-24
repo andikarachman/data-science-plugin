@@ -9,7 +9,7 @@ description: "Guided statistical analysis with test selection, assumption checki
 
 Statistical analysis is a systematic process for testing hypotheses and quantifying relationships. Conduct hypothesis tests (t-test, ANOVA, chi-square), regression, correlation, and Bayesian analyses with assumption checks and APA reporting.
 
-**Role in the ds plugin:** This skill is invoked by `/ds:experiment` at step 3 (Methodology Design) for test selection and power analysis, and at step 7 (Generate Results) for assumption checking and APA-formatted reporting. It replaces the simpler `statistical-tests` skill with comprehensive coverage.
+**Role in the ds plugin:** This skill is invoked by `/ds:experiment` at step 3 (Methodology Design) for test selection and power analysis, and at step 7 (Generate Results) for assumption checking and APA-formatted reporting. For concrete statsmodels API patterns (model fitting, result object methods, diagnostics, convergence troubleshooting), see the `statsmodels` skill. This skill focuses on the statistical workflow: selecting the right test, verifying assumptions, interpreting results, and reporting in APA format.
 
 ## When to Use This Skill
 

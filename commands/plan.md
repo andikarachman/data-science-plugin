@@ -39,6 +39,11 @@ Use the `problem-framer` agent to structure the business question:
 
 Invoke the `scikit-learn` skill's `references/quick_reference.md` (Algorithm Selection cheat sheet) to map the problem type, dataset size, and constraints to candidate algorithms.
 
+When the problem involves **inference** (need p-values, causal interpretation), **GLM** (non-normal outcomes), or **time-series forecasting**, invoke the `statsmodels` skill:
+- Inference/regression: `references/linear_models.md` and `references/glm.md` for model selection
+- Time-series: `references/time_series.md` for forecasting model selection
+- Discrete outcomes: `references/discrete_choice.md` for count/categorical model selection
+
 Propose 2-3 candidate approaches with trade-offs for each:
 - Complexity vs. performance
 - Interpretability vs. accuracy

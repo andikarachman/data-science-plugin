@@ -74,6 +74,14 @@ After suggestions are generated, reference the `scikit-learn` skill's `reference
 
 Correlation matrix for numeric features, association tests for categoricals, target correlation ranking.
 
+#### 7a. Multicollinearity Check
+
+Compute VIF (variance inflation factor) for numeric features. Reference the `statsmodels` skill's `references/stats_diagnostics.md` for `variance_inflation_factor` patterns. Flag features with VIF > 10.
+
+#### 7b. Stationarity Testing (if temporal columns detected)
+
+If temporal columns were identified in step 5, test for stationarity using ADF and KPSS tests. Reference the `statsmodels` skill's `references/time_series.md` for stationarity testing patterns.
+
 ### 8. Write Artifact
 
 Generate an EDA report at `docs/ds/eda/YYYY-MM-DD-<dataset-name>-eda.md`. Use the `exploratory-data-analysis` skill's `assets/report_template.md` as a structural guide. Include:
