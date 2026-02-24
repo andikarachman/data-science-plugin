@@ -18,7 +18,7 @@ agents/
   analysis/                   # Data understanding agents
   modeling/                   # Model-focused agents
   review/                     # Quality and governance agents
-commands/ds/                  # Namespaced commands (subdirectory pattern)
+commands/                     # Commands (plugin name provides namespace)
 skills/<skill-name>/SKILL.md  # One SKILL.md per skill directory
 templates/                    # Reusable artifact templates
 ```
@@ -58,7 +58,7 @@ Which commands invoke which agents and skills:
 ## Naming Conventions
 
 - **Plugin name:** `"ds"` in plugin.json (the colon is injected by Claude Code automatically)
-- **Commands:** Subdirectory pattern `commands/ds/<name>.md`. The `name:` frontmatter must NOT contain colons.
+- **Commands:** Flat in `commands/<name>.md`. The `name:` frontmatter must NOT contain colons. The plugin name `ds` provides the namespace automatically.
 - **Agents:** Category subdirectories `agents/<category>/<name>.md`
 - **Skills:** Kebab-case directories `skills/<skill-name>/SKILL.md`
 - **Templates:** Flat in `templates/<name>.md`
