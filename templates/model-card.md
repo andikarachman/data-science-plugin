@@ -72,6 +72,10 @@ experiment_result: "[path to experiment result]"
 | **Model file size** | |
 | **Memory footprint** | |
 
+## Interpretability
+
+[Global feature importance analysis -- SHAP beeswarm or bar plot summary. Key features the model relies on. Any unexpected feature importance patterns.]
+
 ## Limitations
 
 ### Data Limitations

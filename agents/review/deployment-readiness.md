@@ -32,6 +32,7 @@ You are Deployment Readiness Assessor, a specialist in evaluating whether ML mod
    - Graceful degradation under load or partial failures
 6. **Fairness and compliance** -- Check:
    - Fairness metrics across protected groups (if applicable)
+   - If SHAP analysis is available from the experiment, check that feature attribution evidence supports fairness claims. Reference the `shap` skill's `references/workflows.md` (Workflow 5: Fairness and Bias Analysis) for cohort comparison patterns
    - Regulatory requirements (GDPR, CCPA for personal data models)
    - Audit trail requirements
 7. **Readiness decision** -- Provide a clear recommendation:

@@ -4,6 +4,22 @@ All notable changes to this plugin will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.1.0] - 2026-02-24
+
+### Added
+- `shap` skill -- API patterns for model interpretability using SHAP (SHapley Additive exPlanations) -- explainer selection, feature attribution, visualization (beeswarm, waterfall, scatter, bar, force, heatmap), with 4 reference files
+- `/ds:experiment` now uses `shap` for feature attribution code scaffolds (step 6) and model-agnostic SHAP explanations in supervised, temporal supervised, and time-series forecasting results (step 7)
+- `/ds:review` now includes interpretability as a methodology assessment dimension (step 3)
+- `/ds:ship` now uses `shap` for model card evidence in Limitations and Fairness sections (step 3)
+- Interpretability section added to `model-card` template
+
+### Changed
+- `model-evaluator` agent now references `shap` skill for feature attribution, individual prediction explanations, and fairness cohort comparison
+- `feature-engineer` agent now resolves bare SHAP mention to `shap` skill with specific reference paths
+- `deployment-readiness` agent now references `shap` skill for fairness/compliance evidence
+- `scikit-learn` skill "Role in ds plugin" paragraph updated with `shap` boundary clarification
+- `experiment-result` template Key Plots comments updated with SHAP visualization guidance
+
 ## [2.0.0] - 2026-02-24
 
 ### Added

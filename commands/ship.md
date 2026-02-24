@@ -39,6 +39,7 @@ Use the `model-card` skill to generate a standardized model card:
 - Pull metrics from the experiment result
 - Pull data details from the experiment plan
 - Pull limitation and fairness information from the experiment review (if available)
+- If SHAP analysis was performed during the experiment, incorporate SHAP-based evidence into the model card: use global feature importance (beeswarm plot) to document what the model relies on in the **Limitations** section, and use cohort comparison bar plots to show feature importance differences across protected groups in the **Fairness** section. Reference the `shap` skill's `references/workflows.md` (Workflow 5: Fairness and Bias Analysis)
 
 Ask the user to fill in deployment-specific fields that can't be inferred:
 - Intended users

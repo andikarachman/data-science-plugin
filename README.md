@@ -1,6 +1,6 @@
 # Data Science Plugin
 
-Data science and ML workflow tools that compound institutional knowledge. 8 agents, 6 commands, 13 skills for problem framing, EDA, experimentation, review, deployment, and knowledge compounding.
+Data science and ML workflow tools that compound institutional knowledge. 8 agents, 6 commands, 14 skills for problem framing, EDA, experimentation, review, deployment, and knowledge compounding.
 
 ## Install
 
@@ -50,7 +50,7 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 |-----------|-------|
 | Agents | 8 |
 | Commands | 6 |
-| Skills | 13 |
+| Skills | 14 |
 | Templates | 7 |
 | MCP Servers | 1 |
 
@@ -106,6 +106,7 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 | `aeon` | Aeon API patterns for time series ML -- classification, regression, clustering, anomaly detection, segmentation, and similarity search |
 | `exploratory-data-analysis` | Detect file types and perform format-specific EDA across 200+ scientific formats |
 | `reproducibility-checklist` | Verify experiment reproducibility: seeds, versions, data hashes, environment capture |
+| `shap` | SHAP API patterns for model interpretability -- explainer selection, feature attribution, and visualization |
 | `model-card` | Generate standardized model documentation following HuggingFace and NVIDIA Model Card++ formats |
 
 ## Templates

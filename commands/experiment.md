@@ -181,6 +181,8 @@ When the time-series forecasting experiment uses ML-based forecasters, reference
 
 Include matplotlib visualization boilerplate in the code scaffold. Use the `matplotlib` skill's OO interface convention (`fig, ax = plt.subplots(constrained_layout=True)`) and always close figures after saving (`plt.savefig()` + `plt.close(fig)`). Reference the `matplotlib` skill's `scripts/plot_template.py` for plot function structure.
 
+For supervised and temporal supervised experiments, include SHAP computation and visualization boilerplate after model training. Reference the `shap` skill's SKILL.md Quick Start Guide for the explainer selection decision tree and code patterns. Use `shap.TreeExplainer` for tree-based models, `shap.LinearExplainer` for linear models, or `shap.Explainer(model)` for auto-selection. Include `shap.plots.beeswarm()` for global importance and `shap.plots.waterfall()` for individual predictions. Follow DS plugin conventions: `show=False`, `plt.savefig()` + `plt.close(fig)`.
+
 ### 7. Generate Results (if executing)
 
 After completion, generate `docs/ds/experiments/YYYY-MM-DD-<experiment-name>-result.md` from `templates/experiment-result.md` with:
@@ -200,6 +202,7 @@ After completion, generate `docs/ds/experiments/YYYY-MM-DD-<experiment-name>-res
   - Report results in APA format using `references/reporting_standards.md`
   - Calculate and report effect sizes with confidence intervals
 - For feature attribution analysis, use the `scikit-learn` skill's feature importance patterns: tree-based `feature_importances_` from `references/supervised_learning.md`, feature selection via `references/preprocessing.md` (RFE, SelectFromModel), and `sklearn.inspection.permutation_importance` for model-agnostic importance
+- For model-agnostic feature attribution with per-prediction explanations, use the `shap` skill. Use `references/explainers.md` to select the right explainer (TreeExplainer for tree-based models, LinearExplainer for linear models, KernelExplainer for any model). Generate global importance plots (`shap.plots.beeswarm()`) and individual prediction explanations (`shap.plots.waterfall()`). For feature interaction detection, use `shap.plots.scatter()` with color-coded interaction features. See `references/plots.md` for all visualization options
 - Use the `statsmodels` skill for model-specific diagnostics:
   - Residual analysis and influence diagnostics from `references/stats_diagnostics.md`
   - Model comparison via AIC/BIC tables from `references/linear_models.md` or `references/glm.md`
@@ -215,6 +218,7 @@ After completion, generate `docs/ds/experiments/YYYY-MM-DD-<experiment-name>-res
 - Comparison with published benchmarks if using standard datasets -- reference `aeon` skill's `references/datasets_benchmarking.md` for `get_estimator_results()`
 - Algorithm comparison with statistical testing (Wilcoxon, Nemenyi) from `aeon` skill's `references/datasets_benchmarking.md`
 - For interpretable models: feature importance from Catch22 features, shapelet visualization for ShapeletTransformClassifier
+- For model-agnostic temporal model interpretation, use the `shap` skill. If the aeon estimator exposes `predict` or `predict_proba`, use `shap.KernelExplainer` with a subset of training data as background. For tree-based temporal models (after feature extraction with Catch22 or ROCKET), use `shap.TreeExplainer` on the downstream classifier. Reference `references/explainers.md` for explainer selection
 - Use the `matplotlib` skill for result visualizations:
   - Confusion matrix (scikit-learn `ConfusionMatrixDisplay`), per-class accuracy bar charts
   - Time series examples from each class overlaid for visual comparison
@@ -236,6 +240,7 @@ After completion, generate `docs/ds/experiments/YYYY-MM-DD-<experiment-name>-res
   - Model diagnostic plots (`results.plot_diagnostics()`) from `references/time_series.md`
   - Information criteria comparison (AIC/BIC) across candidate models
 - When using aeon ML-based forecasters, include aeon-specific evaluation metrics from `aeon` skill's `references/forecasting.md`
+- When using scikit-learn or tree-based forecasters, use the `shap` skill to explain feature contributions to forecasts. Use `shap.TreeExplainer` for XGBoost/LightGBM-based forecasters or `shap.LinearExplainer` for linear forecasters
 - Forecast visualization with prediction intervals
 - Stationarity verification on residuals (ADF test)
 - Use the `matplotlib` skill for forecast visualizations:

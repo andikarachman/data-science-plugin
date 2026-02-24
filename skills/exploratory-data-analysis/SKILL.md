@@ -1,6 +1,9 @@
 ---
 name: exploratory-data-analysis
 description: "Detect file types and perform format-specific EDA across 200+ scientific data formats. Use when /ds:eda encounters non-tabular or unfamiliar data files, or when format-specific analysis guidance is needed."
+license: MIT
+metadata:
+    skill-author: K-Dense Inc.
 ---
 
 # Exploratory Data Analysis

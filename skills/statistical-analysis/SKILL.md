@@ -1,6 +1,9 @@
 ---
 name: statistical-analysis
 description: "Guided statistical analysis with test selection, assumption checking, power analysis, and APA reporting. Use when /ds:experiment needs to design comparison protocols, validate assumptions, or report results."
+license: MIT license
+metadata:
+    skill-author: K-Dense Inc.
 ---
 
 # Statistical Analysis
