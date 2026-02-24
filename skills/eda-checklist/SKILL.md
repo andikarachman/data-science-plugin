@@ -7,6 +7,8 @@ description: "Systematic exploratory data analysis checklist covering structure,
 
 Systematic checklist for exploratory data analysis. Work through each section in order. Check off items as you complete them.
 
+**Role in ds plugin:** This skill provides the systematic methodology for tabular EDA -- what to check and in what order. It is invoked by `/ds:eda` at step 6 (Data Quality Checks). The `exploratory-data-analysis` skill handles file type detection and format-specific analysis for non-tabular scientific formats. These skills are complementary: `eda-checklist` answers "what to check in tabular data" while `exploratory-data-analysis` answers "how to analyze any file format."
+
 ## Structure
 
 - [ ] **Shape and types** -- Row count, column count, dtypes, memory usage

@@ -4,6 +4,27 @@ All notable changes to this plugin will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.0.0] - 2026-02-24
+
+### Added
+- `/ds:review` command -- peer review experiments for methodology, leakage, reproducibility, and statistical validity
+- `/ds:ship` command -- assess deployment readiness, generate model cards and deployment documentation
+- `reproducibility-auditor` agent -- audit experiments for reproducibility (seeds, versions, data hashes, environment)
+- `deployment-readiness` agent -- evaluate models for production deployment readiness
+- `reproducibility-checklist` skill -- verify experiment reproducibility requirements with scoring rubric
+- `model-card` skill -- generate standardized model documentation following HuggingFace and NVIDIA Model Card++ formats
+- `experiment-review` template -- peer review document with methodology, leakage, reproducibility, and statistical validity sections
+- `model-card` template -- standardized model documentation for deployment handoff
+- `deployment-readiness` template -- deployment readiness assessment with monitoring, rollback, and SLA sections
+- Project-level retrospective step in `/ds:compound` using `postmortem` template (step 9)
+
+### Changed
+- `/ds:compound` command now includes `disable-model-invocation: true` and optional postmortem generation
+- `eda-checklist` skill now includes explicit "Role in ds plugin" boundary paragraph with `exploratory-data-analysis` skill
+
+### Removed
+- `dataset-assessment` template -- consolidated with `exploratory-data-analysis` skill's `assets/report_template.md` to resolve EDA template duality
+
 ## [1.8.0] - 2026-02-24
 
 ### Added

@@ -2,6 +2,7 @@
 name: ds:compound
 description: Extract and categorize learnings from completed experiments into docs/ds/learnings/ for future retrieval
 argument-hint: "[description of what was learned, or path to experiment report]"
+disable-model-invocation: true
 ---
 
 # Capture Learnings
@@ -85,6 +86,14 @@ Link to the experiment report, review, or notebook that produced this learning. 
 
 Search `docs/ds/learnings/` to confirm the new learning would surface for related future queries. Report: "Learning saved. It will surface when future projects search for [tags]."
 
-### 9. Summary
+### 9. Project-Level Retrospective (Optional)
+
+If the user is capturing learnings at the end of an entire project (not just a single experiment), offer to generate a project-level retrospective using `templates/postmortem.md`. This covers timeline, what worked, what didn't, surprises, and recommendations -- a broader document than individual per-learning files.
+
+Ask: "Would you also like to create a project retrospective using the postmortem template?"
+
+If yes, generate `docs/ds/learnings/YYYY-MM-DD-<project>-postmortem.md` using the template.
+
+### 10. Summary
 
 Display what was captured, where it was saved, and which future queries will find it.

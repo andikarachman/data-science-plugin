@@ -1,6 +1,6 @@
 # Data Science Plugin
 
-Data science and ML workflow tools that compound institutional knowledge. 6 agents, 4 commands, 11 skills for problem framing, EDA, experimentation, and knowledge compounding.
+Data science and ML workflow tools that compound institutional knowledge. 8 agents, 6 commands, 13 skills for problem framing, EDA, experimentation, review, deployment, and knowledge compounding.
 
 ## Install
 
@@ -38,6 +38,8 @@ Frame -> Explore -> Experiment -> Review -> Ship -> Compound -> Repeat
 | `/ds:plan` | Frame business questions as DS problems and plan approach |
 | `/ds:eda` | Run structured exploratory data analysis |
 | `/ds:experiment` | Design and run rigorous ML experiments |
+| `/ds:review` | Peer review experiments for methodology and reproducibility |
+| `/ds:ship` | Assess deployment readiness and generate model cards |
 | `/ds:compound` | Capture learnings to make future projects faster |
 
 Each cycle compounds: experiment learnings surface in future plans, error patterns inform feature engineering, and review feedback becomes institutional knowledge.
@@ -46,10 +48,10 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 
 | Component | Count |
 |-----------|-------|
-| Agents | 6 |
-| Commands | 4 |
-| Skills | 11 |
-| Templates | 5 |
+| Agents | 8 |
+| Commands | 6 |
+| Skills | 13 |
+| Templates | 7 |
 | MCP Servers | 1 |
 
 ## Agents
@@ -69,11 +71,13 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 | `experiment-designer` | Design rigorous experiments with hypotheses and evaluation plans |
 | `model-evaluator` | Evaluate performance with slicing, calibration, and fairness checks |
 
-### Review (1)
+### Review (3)
 
 | Agent | Description |
 |-------|-------------|
 | `documentation-synthesizer` | Synthesize findings into reusable learning documents |
+| `reproducibility-auditor` | Audit experiments for reproducibility (seeds, versions, data hashes) |
+| `deployment-readiness` | Evaluate models for production deployment readiness |
 
 ## Commands
 
@@ -82,6 +86,8 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 | `/ds:plan` | Search past learnings, frame the problem, plan the approach, output a plan doc |
 | `/ds:eda` | Profile data, analyze distributions, check quality, output an EDA report |
 | `/ds:experiment` | Formulate hypothesis, design methodology, check for leakage, output experiment plan and results |
+| `/ds:review` | Peer review experiments for methodology, leakage, reproducibility, and statistical validity |
+| `/ds:ship` | Assess deployment readiness, generate model card and deployment documentation |
 | `/ds:compound` | Extract learnings from completed work, categorize, and save to docs/ds/learnings/ |
 
 ## Skills
@@ -99,15 +105,19 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 | `setup` | Check Python environment for required DS/ML libraries and report versions |
 | `aeon` | Aeon API patterns for time series ML -- classification, regression, clustering, anomaly detection, segmentation, and similarity search |
 | `exploratory-data-analysis` | Detect file types and perform format-specific EDA across 200+ scientific formats |
+| `reproducibility-checklist` | Verify experiment reproducibility: seeds, versions, data hashes, environment capture |
+| `model-card` | Generate standardized model documentation following HuggingFace and NVIDIA Model Card++ formats |
 
 ## Templates
 
 | Template | Description |
 |----------|-------------|
 | `problem-framing` | Problem definition document |
-| `dataset-assessment` | Dataset quality assessment |
 | `experiment-plan` | Experiment design document |
 | `experiment-result` | Experiment result report |
+| `experiment-review` | Peer review assessment with methodology, leakage, and reproducibility checks |
+| `model-card` | Standardized model documentation for deployment handoff |
+| `deployment-readiness` | Deployment readiness assessment with monitoring and rollback plans |
 | `postmortem` | Project learnings and retrospective |
 
 ## MCP Servers
@@ -137,6 +147,18 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 ```
 /ds:experiment Hypothesis: Adding rolling 7-day usage features will improve
                churn prediction AUC by >2% over the baseline feature set.
+```
+
+### Reviewing an experiment
+
+```
+/ds:review docs/ds/experiments/2026-02-24-churn-xgb-result.md
+```
+
+### Shipping a model
+
+```
+/ds:ship docs/ds/experiments/2026-02-24-churn-xgb-result.md
 ```
 
 ### Capturing learnings

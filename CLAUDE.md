@@ -53,6 +53,8 @@ Which commands invoke which agents and skills:
 | `/ds:plan` | problem-framer | scikit-learn, statsmodels, aeon |
 | `/ds:eda` | data-profiler, feature-engineer | eda-checklist, target-leakage-detection, exploratory-data-analysis, scikit-learn, statsmodels, matplotlib, aeon |
 | `/ds:experiment` | experiment-designer, model-evaluator | split-strategy, target-leakage-detection, statistical-analysis, scikit-learn, experiment-tracking, statsmodels, matplotlib, aeon |
+| `/ds:review` | model-evaluator, reproducibility-auditor | statistical-analysis, target-leakage-detection, reproducibility-checklist |
+| `/ds:ship` | deployment-readiness | model-card |
 | `/ds:compound` | documentation-synthesizer | -- |
 
 ## Naming Conventions
@@ -88,6 +90,8 @@ docs/ds/
   plans/       # From /ds:plan
   eda/         # From /ds:eda
   experiments/ # From /ds:experiment
+  reviews/     # From /ds:review
+  deployments/ # From /ds:ship
   learnings/   # From /ds:compound
 ```
 
