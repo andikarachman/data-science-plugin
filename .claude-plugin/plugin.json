@@ -1,7 +1,7 @@
 {
   "name": "ds",
-  "version": "2.2.1",
-  "description": "Data science and ML workflow tools. 9 agents, 7 commands, 15 skills, 8 templates for problem framing, preprocessing, EDA, experimentation, review, deployment, and knowledge compounding.",
+  "version": "2.3.0",
+  "description": "Data science and ML workflow tools. 9 agents, 7 commands, 16 skills, 8 templates for problem framing, preprocessing, EDA, experimentation, review, deployment, and knowledge compounding.",
   "author": {
     "name": "Andika Rachman",
     "url": "https://github.com/andikarachman"
@@ -16,7 +16,8 @@
     "feature-engineering",
     "reproducibility",
     "compound-engineering",
-    "data-preprocessing"
+    "data-preprocessing",
+    "pandas"
   ],
   "mcpServers": {
     "context7": {

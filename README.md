@@ -1,6 +1,6 @@
 # Data Science Plugin
 
-Data science and ML workflow tools that compound institutional knowledge. 9 agents, 7 commands, 15 skills for problem framing, preprocessing, EDA, experimentation, review, deployment, and knowledge compounding.
+Data science and ML workflow tools that compound institutional knowledge. 9 agents, 7 commands, 16 skills for problem framing, preprocessing, EDA, experimentation, review, deployment, and knowledge compounding.
 
 ## Install
 
@@ -51,7 +51,7 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 |-----------|-------|
 | Agents | 9 |
 | Commands | 7 |
-| Skills | 15 |
+| Skills | 16 |
 | Templates | 8 |
 | MCP Servers | 1 |
 
@@ -111,6 +111,7 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 | `reproducibility-checklist` | Verify experiment reproducibility: seeds, versions, data hashes, environment capture |
 | `shap` | SHAP API patterns for model interpretability -- explainer selection, feature attribution, and visualization |
 | `model-card` | Generate standardized model documentation following HuggingFace and NVIDIA Model Card++ formats |
+| `pandas-pro` | Pandas API patterns for DataFrame operations, data cleaning, aggregation, merging, and performance optimization |
 | `data-preprocessing` | Pre-model data preparation pipelines for cleaning, validation, transformation, and ETL orchestration |
 
 ## Templates

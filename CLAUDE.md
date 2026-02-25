@@ -50,10 +50,10 @@ Which commands invoke which agents and skills:
 
 | Command | Agents | Skills |
 |---------|--------|--------|
-| `/ds:plan` | problem-framer | scikit-learn, statsmodels, aeon |
-| `/ds:preprocess` | pipeline-builder | data-preprocessing, scikit-learn |
-| `/ds:eda` | data-profiler, feature-engineer | eda-checklist, target-leakage-detection, exploratory-data-analysis, scikit-learn, statsmodels, matplotlib, aeon, data-preprocessing |
-| `/ds:experiment` | experiment-designer, model-evaluator | split-strategy, target-leakage-detection, statistical-analysis, scikit-learn, experiment-tracking, statsmodels, matplotlib, aeon, shap, data-preprocessing |
+| `/ds:plan` | problem-framer | scikit-learn, statsmodels, aeon, pandas-pro |
+| `/ds:preprocess` | pipeline-builder | data-preprocessing, scikit-learn, pandas-pro |
+| `/ds:eda` | data-profiler, feature-engineer | eda-checklist, target-leakage-detection, exploratory-data-analysis, scikit-learn, statsmodels, matplotlib, aeon, data-preprocessing, pandas-pro |
+| `/ds:experiment` | experiment-designer, model-evaluator | split-strategy, target-leakage-detection, statistical-analysis, scikit-learn, experiment-tracking, statsmodels, matplotlib, aeon, shap, data-preprocessing, pandas-pro |
 | `/ds:review` | model-evaluator, reproducibility-auditor | statistical-analysis, target-leakage-detection, reproducibility-checklist, shap |
 | `/ds:ship` | deployment-readiness | model-card, shap |
 | `/ds:compound` | documentation-synthesizer | -- |

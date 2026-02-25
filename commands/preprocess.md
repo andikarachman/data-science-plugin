@@ -25,8 +25,8 @@ If learnings are found, summarize them: "Found N prior learnings related to prep
 
 ### 2. Load and Detect Data Source
 
-Detect file format from extension and load the dataset:
-- **CSV** (`.csv`): `pd.read_csv()`
+Detect file format from extension and load the dataset. For efficient I/O with dtype specification and chunked reading, reference the `pandas-pro` skill's `references/performance-optimization.md` (I/O Optimization, Specify dtypes When Reading sections):
+- **CSV** (`.csv`): `pd.read_csv()` -- specify `dtype` dict for known columns, use `chunksize` for large files
 - **Parquet** (`.parquet`): `pd.read_parquet()`
 - **Excel** (`.xlsx`, `.xls`): `pd.read_excel()`
 - **TSV** (`.tsv`): `pd.read_csv(sep='\t')`

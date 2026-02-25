@@ -46,6 +46,8 @@ When the problem involves **inference** (need p-values, causal interpretation), 
 
 When the problem involves **time-series classification or regression** (labeled temporal data), invoke the `aeon` skill's SKILL.md "Algorithm Selection Guide" to map the problem to candidate algorithms based on dataset size, accuracy requirements, and interpretability needs. When the problem involves **anomaly detection in time series**, invoke the `aeon` skill's `references/anomaly_detection.md` for algorithm selection. When the problem involves **time-series clustering**, invoke the `aeon` skill's `references/clustering.md` for algorithm selection.
 
+When the problem involves large datasets or multi-source data, reference the `pandas-pro` skill's `references/performance-optimization.md` for data handling strategy (chunked reading, memory optimization, efficient file formats).
+
 Propose 2-3 candidate approaches with trade-offs for each:
 - Complexity vs. performance
 - Interpretability vs. accuracy

@@ -4,6 +4,24 @@ All notable changes to this plugin will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.3.0] - 2026-02-25
+
+### Added
+- `pandas-pro` skill -- canonical pandas API reference for the plugin with 5 reference files (DataFrame operations, data cleaning, aggregation/groupby, merging/joining, performance optimization)
+- `/ds:eda` now references `pandas-pro` for data loading (step 3), structural profiling (step 4), distribution analysis (step 5), and relationship analysis (step 7)
+- `/ds:preprocess` now references `pandas-pro` for I/O optimization (step 2)
+- `/ds:experiment` now references `pandas-pro` for feature assembly merge patterns (step 3) and data preparation code scaffolds (step 6)
+- `/ds:plan` now references `pandas-pro` for large-dataset handling strategy (step 3)
+- Cross-references between `pandas-pro` reference files and related ds plugin skills
+
+### Changed
+- `data-profiler` agent now references `pandas-pro` for DataFrame operation patterns and memory profiling
+- `feature-engineer` agent now references `pandas-pro` for aggregation and merge patterns in multi-table feature assembly
+- `pipeline-builder` agent now references `pandas-pro` for efficient pandas patterns in data assessment code
+- `data-preprocessing` skill "Role in ds plugin" paragraph updated with `pandas-pro` boundary clarification
+- `scikit-learn` skill "Role in ds plugin" paragraph updated with `pandas-pro` boundary clarification
+- `pandas-pro` data-cleaning.md trimmed to remove overlap with `data-preprocessing` (4 sections removed: dropping missing values, removing duplicates, validation functions, pipeline with validation)
+
 ## [2.2.1] - 2026-02-25
 
 ### Added

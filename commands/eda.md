@@ -30,13 +30,13 @@ Use the `exploratory-data-analysis` skill to detect the file type from its exten
 
 ### 3. Load Data (tabular path)
 
-Read the dataset (CSV, Parquet, or database query). If path not provided, ask.
+Read the dataset (CSV, Parquet, or database query). If path not provided, ask. For efficient data loading with dtype specification and chunked reading for large files, reference the `pandas-pro` skill's `references/performance-optimization.md` (I/O Optimization section).
 
 **Large dataset handling:** If the dataset exceeds 100MB, sample at 100K rows and report: "Dataset exceeds 100MB. Sampling 100K rows for profiling. Full dataset has N rows."
 
 ### 4. Structural Profiling (tabular path)
 
-Use the `data-profiler` agent for deep tabular profiling:
+Use the `data-profiler` agent for deep tabular profiling. For proper DataFrame inspection patterns (`.info()`, `.memory_usage(deep=True)`, dtype checking), reference the `pandas-pro` skill's `references/dataframe-operations.md`:
 - Row/column counts, dtypes, memory usage
 - Missing value rates per column (with MCAR/MAR/MNAR assessment)
 - Cardinality of categorical columns
@@ -46,7 +46,7 @@ The `data-profiler` agent handles tabular-specific profiling. The `exploratory-d
 
 ### 5. Distribution Analysis (tabular path)
 
-For each feature:
+For each feature, use groupby-based distribution computation patterns from the `pandas-pro` skill's `references/aggregation-groupby.md` (GroupBy Fundamentals, Transform sections):
 - Numeric: distribution shape, outliers (IQR method), skewness
 - Categorical: value counts, rare categories
 - Temporal: time range, gaps, seasonality signals
@@ -83,7 +83,7 @@ After suggestions are generated, reference the `scikit-learn` skill's `reference
 
 ### 7. Relationship Analysis (tabular path)
 
-Correlation matrix for numeric features, association tests for categoricals, target correlation ranking.
+Correlation matrix for numeric features, association tests for categoricals, target correlation ranking. For multi-table correlation analysis and dataset joining patterns, reference the `pandas-pro` skill's `references/merging-joining.md`.
 
 Generate relationship visualizations using the `matplotlib` skill:
 - Correlation heatmap with annotations -- reference `references/plot_types.md` (Section 6, Correlation Matrix) or prefer `seaborn.heatmap()` for concise API
