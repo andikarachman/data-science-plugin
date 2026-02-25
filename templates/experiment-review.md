@@ -30,7 +30,9 @@ decision: [approve | revise | reject]
 ### Model Selection
 - [ ] Algorithm choice is justified for the problem type
 - [ ] Baseline comparison is included
-- [ ] Hyperparameter search strategy is reasonable
+- [ ] Hyperparameter search strategy is appropriate for the search space dimensionality (reference: `tuning-hyperparameters` skill's `references/strategy_selection.md`)
+- [ ] Search budget is adequate for the space (not severely under-exploring)
+- [ ] Tuning CV strategy matches the data type (e.g., TimeSeriesSplit for forecasting, StratifiedKFold for classification)
 [Assessment notes]
 
 ### Evaluation Design

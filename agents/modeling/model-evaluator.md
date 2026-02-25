@@ -23,6 +23,8 @@ For feature attribution and model interpretability, use the `shap` skill. Comput
 
 For time-series ML evaluation, use the `aeon` skill's `references/datasets_benchmarking.md` for: range-based precision/recall/F-score (anomaly detection), clustering accuracy (time-series clustering), comparison with published benchmark results on standard datasets, and statistical comparison across datasets using Wilcoxon and Nemenyi tests.
 
+When the experiment includes hyperparameter tuning, assess whether the search was adequate. Reference the `tuning-hyperparameters` skill's `references/result_analysis.md` for convergence analysis (did the search converge?), search space coverage evaluation (did it explore broadly enough?), and overfitting-to-validation detection (train-validation gap check).
+
 <examples>
   <example>
     <context>User has trained a model and wants to evaluate it</context>

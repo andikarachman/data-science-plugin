@@ -1,6 +1,6 @@
 # Data Science Plugin
 
-Data science and ML workflow tools that compound institutional knowledge. 9 agents, 8 commands, 18 skills for problem framing, preprocessing, validation, EDA, experimentation, review, deployment, and knowledge compounding.
+Data science and ML workflow tools that compound institutional knowledge. 9 agents, 8 commands, 19 skills for problem framing, preprocessing, validation, EDA, experimentation, review, deployment, and knowledge compounding.
 
 ## Install
 
@@ -22,7 +22,7 @@ uv pip install pandas scikit-learn scipy statsmodels numpy
 Optional libraries (visualization, advanced models, and high-performance DataFrames):
 
 ```bash
-uv pip install matplotlib seaborn aeon xgboost lightgbm shap polars
+uv pip install matplotlib seaborn aeon xgboost lightgbm shap polars optuna
 ```
 
 Run `/ds:setup` to check which libraries are installed.
@@ -52,7 +52,7 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 |-----------|-------|
 | Agents | 9 |
 | Commands | 8 |
-| Skills | 18 |
+| Skills | 19 |
 | Templates | 9 |
 | MCP Servers | 1 |
 
@@ -117,6 +117,7 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 | `data-preprocessing` | Pre-model data preparation pipelines for cleaning, validation, transformation, and ETL orchestration |
 | `data-quality-frameworks` | Data quality validation with Great Expectations, dbt tests, and data contracts |
 | `polars` | Polars expression API for high-performance DataFrame operations, lazy evaluation, joins, aggregations, and I/O |
+| `tuning-hyperparameters` | Hyperparameter tuning workflow -- strategy selection, Bayesian optimization with Optuna, search space design, and result analysis |
 
 ## Templates
 

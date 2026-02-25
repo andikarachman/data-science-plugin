@@ -53,6 +53,7 @@ optional = {
     'shap': 'shap',
     'great_expectations': 'great_expectations',
     'polars': 'polars',
+    'optuna': 'optuna',
 }
 for pkg_name, import_name in optional.items():
     try:
@@ -77,7 +78,7 @@ List only the missing packages in the command. If all required libraries are pre
 For missing optional libraries, suggest but do not insist:
 
 ```
-uv pip install matplotlib seaborn aeon xgboost lightgbm shap great_expectations polars
+uv pip install matplotlib seaborn aeon xgboost lightgbm shap great_expectations polars optuna
 ```
 
 ## Rules

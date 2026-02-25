@@ -4,6 +4,20 @@ All notable changes to this plugin will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.6.0] - 2026-02-25
+
+### Added
+- `tuning-hyperparameters` skill -- hyperparameter tuning workflow reference with strategy selection decision tree, Bayesian optimization with Optuna, search space design patterns, and result analysis with 4 reference files (strategy selection, Optuna guide, search space design, result analysis)
+- `/ds:experiment` now references `tuning-hyperparameters` for strategy selection (step 3), Optuna code scaffolds (step 6), and tuning result analysis (step 7)
+- `optuna` added to `setup` skill optional library checks
+- `optuna` added to `requirements.txt` as optional dependency
+- `experiment-review` template now includes expanded tuning assessment checklist with strategy appropriateness, budget adequacy, and CV strategy match
+
+### Changed
+- `experiment-designer` agent now references `tuning-hyperparameters` for strategy selection at resource budget step
+- `model-evaluator` agent now references `tuning-hyperparameters` for post-tuning convergence and search coverage assessment
+- `scikit-learn` skill "Role in ds plugin" paragraph updated with `tuning-hyperparameters` boundary clarification
+
 ## [2.5.0] - 2026-02-25
 
 ### Added

@@ -54,8 +54,8 @@ Which commands invoke which agents and skills:
 | `/ds:preprocess` | pipeline-builder | data-preprocessing, scikit-learn, pandas-pro, polars |
 | `/ds:validate` | -- | data-quality-frameworks, data-preprocessing, pandas-pro, polars |
 | `/ds:eda` | data-profiler, feature-engineer | eda-checklist, target-leakage-detection, exploratory-data-analysis, scikit-learn, statsmodels, matplotlib, aeon, data-preprocessing, data-quality-frameworks, pandas-pro, polars |
-| `/ds:experiment` | experiment-designer, model-evaluator | split-strategy, target-leakage-detection, statistical-analysis, scikit-learn, experiment-tracking, statsmodels, matplotlib, aeon, shap, data-preprocessing, pandas-pro, polars |
-| `/ds:review` | model-evaluator, reproducibility-auditor | statistical-analysis, target-leakage-detection, reproducibility-checklist, shap |
+| `/ds:experiment` | experiment-designer, model-evaluator | split-strategy, target-leakage-detection, statistical-analysis, scikit-learn, experiment-tracking, statsmodels, matplotlib, aeon, shap, data-preprocessing, pandas-pro, polars, tuning-hyperparameters |
+| `/ds:review` | model-evaluator, reproducibility-auditor | statistical-analysis, target-leakage-detection, reproducibility-checklist, shap, tuning-hyperparameters |
 | `/ds:ship` | deployment-readiness | model-card, shap |
 | `/ds:compound` | documentation-synthesizer | -- |
 
@@ -112,7 +112,7 @@ All commands search learnings before starting work. `/ds:compound` runs a dedupl
 
 ## Prerequisites
 
-The plugin requires Python 3.9+ with these libraries: pandas, scikit-learn, scipy, statsmodels, numpy. Install with `uv pip install -r requirements.txt`. Optional libraries (xgboost, lightgbm, shap, great_expectations, polars) are used in generated experiment and validation code only. Run `/ds:setup` to check the environment.
+The plugin requires Python 3.9+ with these libraries: pandas, scikit-learn, scipy, statsmodels, numpy. Install with `uv pip install -r requirements.txt`. Optional libraries (xgboost, lightgbm, shap, great_expectations, polars, optuna) are used in generated experiment and validation code only. Run `/ds:setup` to check the environment.
 
 ## Conventions
 

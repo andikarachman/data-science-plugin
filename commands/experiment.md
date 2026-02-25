@@ -133,6 +133,11 @@ Invoke the `scikit-learn` skill for:
 - **Hyperparameter search implementation**: Use `references/model_evaluation.md` for concrete `GridSearchCV` / `RandomizedSearchCV` patterns
 - **Algorithm selection**: Use `references/quick_reference.md` for algorithm selection cheat sheets based on data characteristics
 
+Invoke the `tuning-hyperparameters` skill for:
+- **Strategy selection**: Use `references/strategy_selection.md` to choose between grid, random, Bayesian (Optuna), or halving based on search space size and computational budget
+- **Bayesian optimization**: When the search space is large (>500 combinations) or evaluations are expensive, use `references/optuna_guide.md` for Optuna study/trial patterns and pruning
+- **Search space design**: Use `references/search_space_design.md` for per-model hyperparameter range cheat sheets and distribution selection
+
 When data requires pre-model preparation (deduplication, format conversion, structural cleaning) before pipeline construction, reference the `data-preprocessing` skill's `references/transformation_methods.md` for pre-model transform patterns. For in-model preprocessing inside sklearn Pipelines, continue using the `scikit-learn` skill.
 
 When the methodology involves assembling features from multiple data sources, reference the `pandas-pro` skill's `references/merging-joining.md` for merge strategies and cardinality validation. For rolling/window feature engineering, reference the `pandas-pro` skill's `references/aggregation-groupby.md` (Window Functions, Shift and Diff sections). **For large datasets using Polars**, reference the `polars` skill's `references/transformations.md` for join patterns and `references/operations.md` for `over()` window functions.
@@ -171,6 +176,8 @@ Ask the user: "Experiment plan ready. What next?" with options:
 - Review plan with `/ds:review`
 
 When generating the code scaffold, use the `scikit-learn` skill's pipeline patterns (`references/pipelines_and_composition.md`) and the example scripts (`scripts/classification_pipeline.py` or `scripts/clustering_analysis.py`) as structural references. For proper pandas indexing and vectorized operations in generated code, reference the `pandas-pro` skill's `references/dataframe-operations.md` (use `.loc[]`/`.iloc[]`, avoid chained indexing). **For large datasets using Polars**, reference the `polars` skill's `references/operations.md` for expression-based code patterns (use `pl.col()`, avoid Python loops). If the data requires pre-pipeline cleaning (deduplication, type coercion, structural missing data removal), include a data preparation section referencing the `data-preprocessing` skill's `scripts/transform_data.py` before the sklearn Pipeline code.
+
+When the methodology selects Bayesian optimization, reference the `tuning-hyperparameters` skill's `references/optuna_guide.md` for Optuna study/objective patterns and `OptunaSearchCV` integration with sklearn pipelines. For search space definition, reference the `tuning-hyperparameters` skill's `references/search_space_design.md` for per-model cheat sheets.
 
 When the experiment uses statsmodels models (OLS, GLM, ARIMA), reference the `statsmodels` skill's Quick Start Guide and formula API examples in SKILL.md for code scaffold generation.
 
@@ -215,6 +222,7 @@ After completion, generate `docs/ds/experiments/YYYY-MM-DD-<experiment-name>-res
   - Multi-panel summary figure combining key diagnostic plots -- reference `references/api_reference.md` (GridSpec)
   - Custom residual plots and feature importance bar charts -- reference `references/plot_types.md`
   - For standard scikit-learn display plots (`ConfusionMatrixDisplay`, `RocCurveDisplay`), use the scikit-learn skill; use matplotlib for customization and composition
+- When the experiment includes hyperparameter tuning, reference the `tuning-hyperparameters` skill's `references/result_analysis.md` for convergence diagnostics (is the search converging?), parameter importance ranking, and optimization history visualization. Include tuning results summary in the experiment report (best parameters, trials completed, convergence status, wall time).
 
 **Temporal supervised results:**
 - Standard classification/regression metrics (accuracy, F1, RMSE) from scikit-learn

@@ -18,6 +18,9 @@ numpy>=1.24
 # Optional -- high-performance DataFrame alternative (used by polars skill)
 # polars>=1.0
 
+# Optional -- Bayesian hyperparameter optimization (used by tuning-hyperparameters skill)
+# optuna>=3.0
+
 # Optional -- used in generated experiment code only
 # xgboost>=2.0
 # lightgbm>=4.0
