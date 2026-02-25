@@ -115,6 +115,7 @@ Create the directory if needed: `mkdir -p docs/ds/preprocessing/`
 ### 8. Next Steps
 
 Ask the user: "Preprocessing complete. What next?" with options:
+- Validate data quality (`/ds:validate`)
 - Start EDA (`/ds:eda`)
 - Re-run with different parameters
 - Investigate specific findings

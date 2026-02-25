@@ -63,6 +63,7 @@ Create the directory if needed: `mkdir -p docs/ds/plans/`
 
 Ask the user: "Plan ready. What next?" with options:
 - Preprocess data (`/ds:preprocess`) -- if raw data needs cleaning or ETL before exploration
+- Validate data quality (`/ds:validate`) -- if data needs formal quality checks before exploration
 - Start EDA (`/ds:eda`)
 - Refine plan
 - Start experiment (`/ds:experiment`)

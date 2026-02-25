@@ -1,6 +1,6 @@
 # Data Science Plugin
 
-Data science and ML workflow tools that compound institutional knowledge. 9 agents, 7 commands, 16 skills for problem framing, preprocessing, EDA, experimentation, review, deployment, and knowledge compounding.
+Data science and ML workflow tools that compound institutional knowledge. 9 agents, 8 commands, 17 skills for problem framing, preprocessing, validation, EDA, experimentation, review, deployment, and knowledge compounding.
 
 ## Install
 
@@ -30,13 +30,14 @@ Run `/ds:setup` to check which libraries are installed.
 ## Workflow
 
 ```
-Frame -> Preprocess -> Explore -> Experiment -> Review -> Ship -> Compound -> Repeat
+Frame -> Preprocess -> Validate -> Explore -> Experiment -> Review -> Ship -> Compound -> Repeat
 ```
 
 | Command | Purpose |
 |---------|---------|
 | `/ds:plan` | Frame business questions as DS problems and plan approach |
 | `/ds:preprocess` | Clean, validate, and transform raw data with automated pipelines |
+| `/ds:validate` | Run formal data quality validation with expectation suites |
 | `/ds:eda` | Run structured exploratory data analysis |
 | `/ds:experiment` | Design and run rigorous ML experiments |
 | `/ds:review` | Peer review experiments for methodology and reproducibility |
@@ -50,9 +51,9 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 | Component | Count |
 |-----------|-------|
 | Agents | 9 |
-| Commands | 7 |
-| Skills | 16 |
-| Templates | 8 |
+| Commands | 8 |
+| Skills | 17 |
+| Templates | 9 |
 | MCP Servers | 1 |
 
 ## Agents
@@ -87,6 +88,7 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 |---------|-------------|
 | `/ds:plan` | Search past learnings, frame the problem, plan the approach, output a plan doc |
 | `/ds:preprocess` | Assess data quality, design and execute preprocessing pipelines, output preprocessing report |
+| `/ds:validate` | Run data quality validation with Great Expectations, pandas, or data contracts, output validation report |
 | `/ds:eda` | Profile data, analyze distributions, check quality, output an EDA report |
 | `/ds:experiment` | Formulate hypothesis, design methodology, check for leakage, output experiment plan and results |
 | `/ds:review` | Peer review experiments for methodology, leakage, reproducibility, and statistical validity |
@@ -113,6 +115,7 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 | `model-card` | Generate standardized model documentation following HuggingFace and NVIDIA Model Card++ formats |
 | `pandas-pro` | Pandas API patterns for DataFrame operations, data cleaning, aggregation, merging, and performance optimization |
 | `data-preprocessing` | Pre-model data preparation pipelines for cleaning, validation, transformation, and ETL orchestration |
+| `data-quality-frameworks` | Data quality validation with Great Expectations, dbt tests, and data contracts |
 
 ## Templates
 
@@ -125,6 +128,7 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 | `model-card` | Standardized model documentation for deployment handoff |
 | `deployment-readiness` | Deployment readiness assessment with monitoring and rollback plans |
 | `preprocessing-report` | Data preprocessing pipeline execution report with before/after metrics |
+| `validation-report` | Data quality validation results with per-expectation outcomes and quality dimensions |
 | `postmortem` | Project learnings and retrospective |
 
 ## MCP Servers
@@ -147,6 +151,12 @@ Each cycle compounds: experiment learnings surface in future plans, error patter
 
 ```
 /ds:preprocess ./data/raw/customers.csv
+```
+
+### Validating data quality
+
+```
+/ds:validate ./data/preprocessed/customers-clean.csv
 ```
 
 ### Exploring a dataset

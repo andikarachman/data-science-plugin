@@ -39,6 +39,7 @@ Use the `model-evaluator` agent to assess the experiment methodology:
 - **Model selection** -- Is the algorithm choice justified? Is there a baseline comparison?
 - **Evaluation design** -- Is the primary metric appropriate? Are slices covered?
 - **Interpretability** -- Has the experiment included feature attribution analysis? Are SHAP values or equivalent explanations provided for key predictions? Reference the `shap` skill for interpretability patterns.
+- **Data quality** -- Were formal data quality checks run before modeling? Is there a validation report in `docs/ds/validations/`? If not, recommend running `/ds:validate` to establish quality gates.
 
 For each assessment, check the corresponding box in the review template.
 

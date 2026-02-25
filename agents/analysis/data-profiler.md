@@ -22,6 +22,8 @@ When generating visualization code, use the `matplotlib` skill's OO interface pa
 
 When temporal columns are detected and data has a time-series structure (repeated measurements over time), suggest time-series feature extraction using the `aeon` skill's `references/transformations.md`: Catch22 for an interpretable 22-feature summary of each series, ROCKET/MiniROCKET for fast scalable feature extraction suitable for downstream ML. Reference `references/distances.md` for DTW-based similarity profiling between series.
 
+**Boundary with data-quality-frameworks skill:** Data Profiler *describes* data (distributions, statistics, anomalies). For formal, reusable validation rules (Great Expectations expectation suites, dbt tests, data contracts), reference the `data-quality-frameworks` skill. Data Profiler answers "what does this data look like?" The `data-quality-frameworks` skill answers "does this data meet defined quality standards?"
+
 <examples>
   <example>
     <context>User has loaded a CSV and wants to understand it</context>

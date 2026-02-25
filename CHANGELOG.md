@@ -4,6 +4,28 @@ All notable changes to this plugin will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.4.0] - 2026-02-25
+
+### Added
+- `data-quality-frameworks` skill -- data quality validation with Great Expectations, dbt tests, and data contracts (6 patterns: GX suite, GX checkpoint, dbt tests, custom dbt tests, data contracts, automated pipeline)
+- `/ds:validate` command -- run formal data quality validation with expectation suites, quality dimension assessment, and framework detection (Great Expectations or pandas fallback)
+- `validation-report` template -- validation results with per-expectation outcomes, quality dimension summary, data contract status, and pass/fail decision
+- `great_expectations` added to `setup` skill optional library checks
+- `/ds:preprocess` step 8 now offers `/ds:validate` as next step
+- `/ds:eda` step 6 now references `data-quality-frameworks` for formal quality validation
+- `/ds:review` step 3 now includes data quality audit in methodology assessment
+- `docs/ds/validations/` output directory for validation reports
+- `validation` added to `lifecycle_stage` enum in `/ds:compound` and `CLAUDE.md`
+- `/ds:plan` step 5 now suggests `/ds:validate` as a next step option
+- `/ds:eda` step 6 now checks for existing validation artifacts before running quality checks
+- `/ds:compound` now searches `docs/ds/validations/` for learning extraction
+
+### Changed
+- `data-profiler` agent now references `data-quality-frameworks` skill with boundary clarification
+- `pipeline-builder` agent now recommends `/ds:validate` for post-pipeline quality verification
+- `data-preprocessing` skill "Role in ds plugin" paragraph updated with `data-quality-frameworks` validation boundary
+- Workflow updated from `Frame -> Preprocess -> Explore -> ...` to `Frame -> Preprocess -> Validate -> Explore -> ...`
+
 ## [2.3.0] - 2026-02-25
 
 ### Added

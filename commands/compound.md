@@ -17,7 +17,7 @@ disable-model-invocation: true
 
 ### 1. Gather Context
 
-Read recent experiment reports, reviews, and any referenced artifacts. If a path was provided, read that file first.
+Read recent experiment reports, reviews, validation reports, and any referenced artifacts. Search `docs/ds/experiments/`, `docs/ds/reviews/`, `docs/ds/validations/`, and `docs/ds/preprocessing/` for recent artifacts. If a path was provided, read that file first.
 
 ### 2. Extract Learnings
 
@@ -63,7 +63,7 @@ findings:
   - insight: "Concise description of the finding"
     mechanism: hyperparameter_tuning
     impact: high            # high | medium | low
-lifecycle_stage: experiment # framing | preprocessing | eda | experiment | review | deployment
+lifecycle_stage: experiment # framing | preprocessing | validation | eda | experiment | review | deployment
 supersedes: ""              # Path to learning this replaces (if any)
 related:                    # Bidirectional cross-references
   - path/to/related/artifact.md

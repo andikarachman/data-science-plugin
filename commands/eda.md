@@ -62,12 +62,16 @@ When temporal columns are detected, suggest time-series feature extraction using
 
 ### 6. Data Quality Checks (tabular path)
 
+**Check for existing validation:** Search `docs/ds/validations/` for a validation report matching this dataset (by filename or data hash). If found, report: "Found prior validation report: [path]. Loading quality findings." Use those findings to skip redundant checks and focus on dimensions not yet covered. If not found, proceed with the full checklist.
+
 Apply the `eda-checklist` skill. Flag:
 - Duplicates
 - Constant columns
 - High-cardinality categoricals
 - Suspicious distributions
 - Potential leakage columns
+
+For formal quality validation with Great Expectations expectation suites or data contracts, recommend running `/ds:validate`. Reference the `data-quality-frameworks` skill's quality dimensions table (completeness, uniqueness, validity, accuracy, consistency, timeliness) for comprehensive quality assessment.
 
 #### 6a. Target Leakage Detection
 
