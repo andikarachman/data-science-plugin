@@ -4,6 +4,25 @@ All notable changes to this plugin will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.2.1] - 2026-02-25
+
+### Added
+- Pre-model imputation methods in `data-preprocessing` skill -- median imputation for numeric columns, mode imputation for categorical columns, KNN imputation using correlated features with LabelEncoder for mixed types
+- Text processing operations in `data-preprocessing` skill -- extract_numbers, clean_whitespace, extract_email, lowercase, remove_special
+- IQR-based outlier capping (winsorization) in `data-preprocessing` skill -- preserves all rows by clipping values at IQR fence
+- Z-score outlier removal in `data-preprocessing` skill -- alternative to IQR for normally distributed data
+- Imputation, text processing, winsorization, and Z-score entries in error handling strategies reference
+- Outlier method selection guide in SKILL.md and transformation methods reference
+
+### Changed
+- `data-preprocessing` skill "Role in ds plugin" paragraph updated with imputation boundary clarification
+- `scikit-learn` skill "Role in ds plugin" paragraph updated with bilateral imputation boundary
+- `pipeline-builder` agent now recommends imputation strategies, text processing, and expanded outlier methods
+- Pipeline step sequence expanded from 8 to 11 steps in `references/pipeline_configuration.md`
+- Column-type routing table updated with imputation and text processing recommendations
+- Preprocessing report template Column-Level Changes table expanded with imputation, text, and outlier capping examples
+- Config template YAML updated with imputation, text processing, and alternative outlier step examples
+
 ## [2.2.0] - 2026-02-25
 
 ### Added

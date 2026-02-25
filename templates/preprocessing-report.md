@@ -75,7 +75,13 @@ total_execution_time: "0.0s"
 | [column_name] | Dropped | [reason, e.g., 95% missing] |
 | [column_name] | Type coerced | [string -> numeric, N values became NaN] |
 | [column_name] | Normalized | [whitespace stripped, lowercased] |
-| [column_name] | Outliers removed | [N rows removed via IQR] |
+| [column_name] | Imputed (median) | [N values filled with median] |
+| [column_name] | Imputed (mode) | [N values filled with most frequent] |
+| [column_name] | Imputed (KNN) | [N values filled using features: col1, col2] |
+| [column_name] | Text processed | [operation: extract_email, extract_numbers, etc.] |
+| [column_name] | Outliers removed (IQR) | [N rows removed, factor=1.5] |
+| [column_name] | Outliers capped (IQR) | [N values capped, factor=1.5] |
+| [column_name] | Outliers removed (Z-score) | [N rows removed, threshold=3.0] |
 
 ## Validation Results
 

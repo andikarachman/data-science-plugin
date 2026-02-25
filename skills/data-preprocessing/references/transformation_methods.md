@@ -51,7 +51,7 @@ def deduplicate_by_key(df, key_cols, sort_col=None, sort_ascending=False):
 
 ## Missing Data -- Structural Handling
 
-Structural missing data handling removes rows or columns with excessive missing values. This is distinct from modeling-level imputation (SimpleImputer, KNNImputer) which belongs in the `scikit-learn` skill.
+Structural missing data handling removes rows or columns with excessive missing values.
 
 ### Drop High-Missing Columns
 
@@ -94,6 +94,138 @@ def drop_constant_columns(df):
     nunique = df.nunique()
     constant = nunique[nunique <= 1].index.tolist()
     return df.drop(columns=constant), {"columns_dropped": constant}
+```
+
+## Pre-Model Imputation
+
+Pre-model imputation fills missing values before EDA or profiling begins. This is applied to the entire dataset once. For in-model imputation inside sklearn Pipelines (which participates in cross-validation folds), use the `scikit-learn` skill.
+
+### Median Imputation
+
+```python
+from sklearn.impute import SimpleImputer
+
+def impute_median(df, columns):
+    """Impute missing numeric values with column median.
+
+    Returns:
+        (cleaned_df, {"strategy": "median", "filled": {col: count}})
+    """
+    df_clean = df.copy()
+    imputer = SimpleImputer(strategy="median")
+    filled = {}
+    for col in columns:
+        df_clean[col] = pd.to_numeric(df_clean[col], errors="coerce")
+        n_missing = df_clean[col].isnull().sum()
+        if n_missing > 0 and pd.api.types.is_numeric_dtype(df_clean[col]):
+            df_clean[col] = imputer.fit_transform(df_clean[[col]]).ravel()
+            filled[col] = n_missing
+    return df_clean, {"strategy": "median", "filled": filled}
+```
+
+### Mode Imputation
+
+```python
+def impute_mode(df, columns):
+    """Impute missing categorical values with mode (most frequent).
+
+    Returns:
+        (cleaned_df, {"strategy": "mode", "filled": {col: count}})
+    """
+    df_clean = df.copy()
+    filled = {}
+    for col in columns:
+        if df_clean[col].dropna().empty:
+            continue
+        n_missing = df_clean[col].isnull().sum()
+        if n_missing > 0:
+            mode_val = df_clean[col].mode()
+            if len(mode_val) > 0:
+                df_clean[col] = df_clean[col].fillna(mode_val[0])
+                filled[col] = n_missing
+    return df_clean, {"strategy": "mode", "filled": filled}
+```
+
+### KNN Imputation
+
+```python
+from sklearn.impute import KNNImputer
+from sklearn.preprocessing import LabelEncoder
+
+def impute_knn(df, target_features, n_neighbors=5):
+    """KNN-based imputation using correlated features.
+
+    Handles mixed types by encoding categoricals with LabelEncoder
+    before KNN, then decoding back.
+
+    Args:
+        target_features: Dict mapping target columns to configuration.
+            Format: {
+                'target_col': {
+                    'features': ['col1', 'col2'],
+                    'type': 'numeric' | 'categorical' | 'binary'
+                }
+            }
+        n_neighbors: Number of neighbors.
+
+    Returns:
+        (cleaned_df, {"strategy": "knn", "n_neighbors": int, "filled": {col: count}})
+    """
+    # See scripts/transform_data.py for full implementation
+```
+
+**Imputation method selection:**
+
+| Method | When to use | Data type |
+|--------|------------|-----------|
+| `impute_median` | Independent numeric columns, robust to outliers | Numeric |
+| `impute_mode` | Independent categorical columns | Categorical |
+| `impute_knn` | Columns with correlated features that can inform missing values | Mixed |
+
+## Text Processing
+
+Text processing operations for extracting structured data from text columns or cleaning text content.
+
+### Text Operations
+
+```python
+import re
+
+def process_text(df, columns, operation="extract_numbers"):
+    """Apply text processing operations to specified columns.
+
+    Args:
+        columns: Text columns to process.
+        operation: One of:
+            - 'extract_numbers': Extract first numeric value from text
+            - 'clean_whitespace': Strip leading/trailing whitespace
+            - 'extract_email': Extract email address from text
+            - 'lowercase': Convert to lowercase
+            - 'remove_special': Remove non-alphanumeric characters
+
+    Returns:
+        (cleaned_df, {"operation": str, "processed_columns": list})
+    """
+    df_clean = df.copy()
+    for col in columns:
+        if operation == "extract_numbers":
+            df_clean[col] = df_clean[col].astype(str).apply(
+                lambda x: re.search(r"\d+", x).group() if re.search(r"\d+", x) else None
+            )
+        elif operation == "clean_whitespace":
+            df_clean[col] = df_clean[col].astype(str).str.strip()
+        elif operation == "extract_email":
+            pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+            df_clean[col] = df_clean[col].astype(str).apply(
+                lambda x: re.search(pattern, x).group() if re.search(pattern, x) else None
+            )
+        elif operation == "lowercase":
+            df_clean[col] = df_clean[col].astype(str).str.lower()
+        elif operation == "remove_special":
+            df_clean[col] = df_clean[col].astype(str).apply(
+                lambda x: re.sub(r"[^a-zA-Z0-9\s]", "", x)
+            )
+    return df_clean, {"operation": operation, "processed_columns": columns}
 ```
 
 ## Type Coercion
@@ -234,6 +366,65 @@ def remove_outliers_iqr(df, columns, factor=1.5):
     return df[mask].copy(), {"rows_removed": (~mask).sum(), "outlier_counts": counts}
 ```
 
+### IQR-Based Capping (Winsorization)
+
+```python
+def cap_outliers_iqr(df, columns, factor=1.5):
+    """Cap outliers at IQR bounds instead of removing rows.
+
+    Preserves all rows by clipping extreme values to the fence.
+    Use instead of removal when losing rows is costly.
+
+    Args:
+        columns: Numeric columns to cap.
+        factor: IQR multiplier (1.5 = standard, 3.0 = extreme only).
+
+    Returns:
+        (cleaned_df, {"method": "iqr_cap", "factor": float, "bounds": dict})
+    """
+    df_clean = df.copy()
+    bounds = {}
+    for col in columns:
+        df_clean[col] = pd.to_numeric(df_clean[col], errors="coerce")
+        q1 = df_clean[col].quantile(0.25)
+        q3 = df_clean[col].quantile(0.75)
+        iqr = q3 - q1
+        lower = q1 - factor * iqr
+        upper = q3 + factor * iqr
+        n_capped = ((df_clean[col] < lower) | (df_clean[col] > upper)).sum()
+        df_clean[col] = df_clean[col].clip(lower=lower, upper=upper)
+        bounds[col] = {"lower": lower, "upper": upper, "capped": n_capped}
+    return df_clean, {"method": "iqr_cap", "factor": factor, "bounds": bounds}
+```
+
+### Z-Score-Based Removal
+
+```python
+def remove_outliers_zscore(df, columns, threshold=3.0):
+    """Remove rows with outliers using Z-score method.
+
+    Best suited for approximately normal distributions.
+
+    Args:
+        columns: Numeric columns to check.
+        threshold: Z-score threshold (3.0 = ~99.7% of data).
+
+    Returns:
+        (cleaned_df, {"method": "zscore", "threshold": float, "rows_removed": int, "outlier_counts": dict})
+    """
+    mask = pd.Series(True, index=df.index)
+    counts = {}
+    for col in columns:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+        mean, std = df[col].mean(), df[col].std()
+        if std > 0:
+            z_scores = np.abs((df[col] - mean) / std)
+            col_outliers = z_scores >= threshold
+            counts[col] = col_outliers.sum()
+            mask &= ~col_outliers
+    return df[mask].copy(), {"method": "zscore", "threshold": threshold, "rows_removed": (~mask).sum(), "outlier_counts": counts}
+```
+
 ### Percentile-Based Clipping
 
 ```python
@@ -252,6 +443,15 @@ def clip_outliers(df, columns, lower_pct=0.01, upper_pct=0.99):
         bounds[col] = {"lower": lower, "upper": upper}
     return df_clean, {"clipped_columns": columns, "bounds": bounds}
 ```
+
+**Outlier method selection:**
+
+| Method | When to use | Row impact |
+|--------|------------|------------|
+| `remove_outliers_iqr` | General-purpose, non-normal data | Removes rows |
+| `cap_outliers_iqr` | Preserve all rows, cap extreme values | No rows removed |
+| `remove_outliers_zscore` | Normal distributions, parametric analysis | Removes rows |
+| `clip_outliers` | Percentile-based clipping (arbitrary bounds) | No rows removed |
 
 ## Column Operations
 

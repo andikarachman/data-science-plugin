@@ -61,7 +61,13 @@ def suggest_fix(step_name, error):
 | Type coercion | `ValueError` | Unparseable values | Use `errors='coerce'` to set invalid values to NaN |
 | Date parsing | Mixed formats | Multiple date formats in same column | Specify format or use `infer_datetime_format=True` |
 | Schema validation | `AssertionError` | Data violates expected schema | Review validation errors and adjust data or schema |
-| Outlier removal | Empty DataFrame | Too aggressive threshold | Increase IQR factor or percentile bounds |
+| Outlier removal (IQR) | Empty DataFrame | Too aggressive threshold | Increase IQR factor (1.5 -> 3.0) |
+| Outlier removal (Z-score) | Empty DataFrame | Too aggressive threshold | Increase Z-score threshold (3.0 -> 4.0) or use IQR for non-normal data |
+| Outlier capping (IQR) | All values identical | Column has zero IQR (constant values) | Skip capping for constant columns |
+| Imputation (median) | All-null column | Column is entirely missing | Drop column instead of imputing |
+| Imputation (mode) | Empty column | No non-null values to compute mode | Drop column or impute with a default value |
+| Imputation (KNN) | `ValueError` | Insufficient non-null neighbors | Reduce `n_neighbors` or use median/mode fallback |
+| Text processing | Regex failure | Unexpected text format | Verify column contains expected text patterns before extraction |
 | File write | `PermissionError` | No write access | Check directory permissions |
 
 ## Validation Modes

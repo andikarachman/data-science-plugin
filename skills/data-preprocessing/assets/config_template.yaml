@@ -51,6 +51,29 @@ pipeline:
       params:
         threshold: 0.5
 
+    - name: "impute_median"
+      function: "impute_median"
+      params:
+        columns:
+          - "age"
+          - "income"
+
+    - name: "impute_mode"
+      function: "impute_mode"
+      params:
+        columns:
+          - "status"
+          - "category"
+
+    # - name: "impute_knn"
+    #   function: "impute_knn"
+    #   params:
+    #     target_features:
+    #       income:
+    #         features: ["age", "education"]
+    #         type: "numeric"
+    #     n_neighbors: 5
+
     - name: "coerce_types"
       function: "coerce_types"
       params:
@@ -68,6 +91,13 @@ pipeline:
           - "city"
         case: "lower"
 
+    # - name: "process_text"
+    #   function: "process_text"
+    #   params:
+    #     columns:
+    #       - "notes"
+    #     operation: "extract_email"  # extract_numbers, clean_whitespace, extract_email, lowercase, remove_special
+
     - name: "remove_outliers"
       function: "remove_outliers_iqr"
       params:
@@ -75,6 +105,19 @@ pipeline:
           - "age"
           - "income"
         factor: 3.0  # 1.5 = standard, 3.0 = extreme only
+
+    # Alternative outlier methods (uncomment one):
+    # - name: "cap_outliers"
+    #   function: "cap_outliers_iqr"
+    #   params:
+    #     columns: ["age", "income"]
+    #     factor: 1.5
+
+    # - name: "remove_outliers_zscore"
+    #   function: "remove_outliers_zscore"
+    #   params:
+    #     columns: ["age", "income"]
+    #     threshold: 3.0
 
   # Pipeline options
   options:

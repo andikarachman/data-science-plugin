@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 This skill provides patterns for building and executing automated data preprocessing pipelines. It covers pre-model data preparation -- everything that happens to raw data *before* it enters a machine learning pipeline. Use this skill for data cleaning, schema validation, format conversion, deduplication, and ETL orchestration.
 
-**Role in the ds plugin:** This skill is invoked by `/ds:preprocess` as the primary pipeline construction and execution reference, by `/ds:eda` at step 6b for pre-model data preparation patterns emerging from profiling, and by `/ds:experiment` at steps 3 and 6 for data preparation code outside sklearn Pipelines. It provides concrete pipeline patterns complementing the `pipeline-builder` agent (which assesses data quality and recommends pipeline steps) and the `scikit-learn` skill (which handles in-model preprocessing inside sklearn Pipelines). For pre-model data preparation (deduplication, format conversion, schema validation, structural cleaning, ETL orchestration), use this skill. For in-model preprocessing that participates in cross-validation (StandardScaler, SimpleImputer, OneHotEncoder inside an sklearn Pipeline), use the `scikit-learn` skill.
+**Role in the ds plugin:** This skill is invoked by `/ds:preprocess` as the primary pipeline construction and execution reference, by `/ds:eda` at step 6b for pre-model data preparation patterns emerging from profiling, and by `/ds:experiment` at steps 3 and 6 for data preparation code outside sklearn Pipelines. It provides concrete pipeline patterns complementing the `pipeline-builder` agent (which assesses data quality and recommends pipeline steps) and the `scikit-learn` skill (which handles in-model preprocessing inside sklearn Pipelines). For pre-model data preparation (deduplication, format conversion, schema validation, structural cleaning, statistical imputation, text processing, outlier handling, ETL orchestration), use this skill. For in-model preprocessing that participates in cross-validation (StandardScaler, SimpleImputer, OneHotEncoder inside an sklearn Pipeline), use the `scikit-learn` skill. **Imputation boundary:** This skill provides pre-model imputation (fill missing values before EDA or profiling begins, applied to the entire dataset once). The `scikit-learn` skill provides in-model imputation inside sklearn Pipelines (participates in cross-validation folds, preventing data leakage from test to train). Use pre-model imputation when you need complete data for profiling; use in-model imputation when imputation must respect train/test boundaries.
 
 ## When to Use This Skill
 
@@ -19,15 +19,18 @@ Use this skill when:
 - Raw data needs cleaning before any analysis (duplicates, format issues, structural problems)
 - Data requires schema validation (column presence, types, value ranges)
 - Multiple data sources need joining or format conversion (ETL)
-- Rows or columns with high missing rates need structural removal (not modeling-level imputation)
+- Rows or columns with high missing rates need structural removal
+- Missing values need pre-model filling (median, mode, or KNN imputation before EDA)
+- Text columns need extraction or cleaning (extract numbers, emails, remove special characters)
 - String columns need normalization (whitespace, case, encoding)
 - Date columns need parsing and timezone alignment
+- Outliers need handling (removal via IQR/Z-score, or capping via winsorization)
 - Data quality assurance checks are needed before EDA or modeling
 - Large datasets (>100MB) need chunked processing
 
 Do NOT use this skill for:
 
-- In-model preprocessing (scaling, encoding, imputation inside sklearn Pipelines) -- use the `scikit-learn` skill
+- In-model preprocessing (scaling, encoding, imputation inside sklearn Pipelines that participates in cross-validation) -- use the `scikit-learn` skill
 - Data profiling and characterization -- use the `data-profiler` agent
 - Feature engineering (creating new features from existing ones) -- use the `feature-engineer` agent
 - Statistical analysis of data quality -- use the `statistical-analysis` skill
@@ -110,6 +113,106 @@ def normalize_strings(df, columns=None):
     df_clean = df.copy()
     for col in columns:
         df_clean[col] = df_clean[col].str.strip().str.lower()
+    return df_clean
+```
+
+**Pre-model imputation:**
+
+Fill missing values before EDA or profiling. For in-model imputation inside sklearn Pipelines (which participates in cross-validation), use the `scikit-learn` skill.
+
+```python
+from sklearn.impute import SimpleImputer, KNNImputer
+from sklearn.preprocessing import LabelEncoder
+
+def impute_median(df, columns):
+    """Impute missing numeric values with column median.
+
+    Args:
+        df: Input DataFrame.
+        columns: Numeric columns to impute.
+
+    Returns:
+        Cleaned DataFrame, dict of {column: values_filled}.
+    """
+    df_clean = df.copy()
+    imputer = SimpleImputer(strategy="median")
+    for col in columns:
+        df_clean[col] = pd.to_numeric(df_clean[col], errors="coerce")
+        if df_clean[col].isnull().any():
+            df_clean[col] = imputer.fit_transform(df_clean[[col]]).ravel()
+    return df_clean
+
+def impute_mode(df, columns):
+    """Impute missing categorical values with mode (most frequent).
+
+    Args:
+        df: Input DataFrame.
+        columns: Categorical columns to impute.
+
+    Returns:
+        Cleaned DataFrame, dict of {column: values_filled}.
+    """
+    df_clean = df.copy()
+    for col in columns:
+        if not df_clean[col].dropna().empty:
+            mode_val = df_clean[col].mode()
+            if len(mode_val) > 0:
+                df_clean[col] = df_clean[col].fillna(mode_val[0])
+    return df_clean
+
+def impute_knn(df, target_features, n_neighbors=5):
+    """KNN imputation using correlated features.
+
+    Uses LabelEncoder for categorical features before KNN.
+
+    Args:
+        df: Input DataFrame.
+        target_features: Dict of {column: {'features': [...], 'type': 'numeric'|'categorical'|'binary'}}.
+        n_neighbors: Number of neighbors.
+
+    Returns:
+        Cleaned DataFrame.
+    """
+    # See scripts/transform_data.py for full implementation
+    # with LabelEncoder encoding/decoding for mixed types
+```
+
+**Text processing:**
+
+```python
+import re
+
+def process_text(df, columns, operation="extract_numbers"):
+    """Apply text processing operations.
+
+    Args:
+        df: Input DataFrame.
+        columns: Text columns to process.
+        operation: 'extract_numbers', 'clean_whitespace', 'extract_email',
+            'lowercase', 'remove_special'.
+
+    Returns:
+        Cleaned DataFrame.
+    """
+    df_clean = df.copy()
+    for col in columns:
+        if operation == "extract_numbers":
+            df_clean[col] = df_clean[col].astype(str).apply(
+                lambda x: re.search(r"\d+", x).group() if re.search(r"\d+", x) else None
+            )
+        elif operation == "clean_whitespace":
+            df_clean[col] = df_clean[col].astype(str).str.strip()
+        elif operation == "extract_email":
+            pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+            df_clean[col] = df_clean[col].astype(str).apply(
+                lambda x: re.search(pattern, x).group() if re.search(pattern, x) else None
+            )
+        elif operation == "lowercase":
+            df_clean[col] = df_clean[col].astype(str).str.lower()
+        elif operation == "remove_special":
+            df_clean[col] = df_clean[col].astype(str).apply(
+                lambda x: re.sub(r"[^a-zA-Z0-9\s]", "", x)
+            )
     return df_clean
 ```
 
@@ -197,17 +300,15 @@ def coerce_types(df, type_map):
     return df_clean, failed
 ```
 
-**Outlier removal (structural, pre-model):**
+**Outlier handling (structural, pre-model):**
+
+Four methods for different scenarios. For outlier-robust scaling inside sklearn Pipelines, use `RobustScaler` from the `scikit-learn` skill.
 
 ```python
 import numpy as np
 
 def remove_outliers_iqr(df, columns, factor=1.5):
     """Remove rows with outliers using the IQR method.
-
-    This is structural outlier removal for data cleaning.
-    For outlier-robust scaling inside sklearn Pipelines, use RobustScaler
-    from the scikit-learn skill.
 
     Args:
         df: Input DataFrame.
@@ -225,10 +326,57 @@ def remove_outliers_iqr(df, columns, factor=1.5):
         lower = q1 - factor * iqr
         upper = q3 + factor * iqr
         mask &= df[col].between(lower, upper)
+    return df[mask].copy(), (~mask).sum()
 
-    n_removed = (~mask).sum()
-    return df[mask].copy(), n_removed
+def cap_outliers_iqr(df, columns, factor=1.5):
+    """Cap outliers at IQR bounds (winsorization).
+
+    Preserves all rows by clipping extreme values to the fence.
+    Use instead of removal when losing rows is costly.
+
+    Args:
+        df: Input DataFrame.
+        columns: Numeric columns to cap.
+        factor: IQR multiplier (1.5 = standard, 3.0 = extreme only).
+
+    Returns:
+        Cleaned DataFrame, bounds dict.
+    """
+    df_clean = df.copy()
+    for col in columns:
+        q1, q3 = df_clean[col].quantile(0.25), df_clean[col].quantile(0.75)
+        iqr = q3 - q1
+        df_clean[col] = df_clean[col].clip(q1 - factor * iqr, q3 + factor * iqr)
+    return df_clean
+
+def remove_outliers_zscore(df, columns, threshold=3.0):
+    """Remove rows with outliers using Z-score method.
+
+    Best for approximately normal distributions.
+
+    Args:
+        df: Input DataFrame.
+        columns: Numeric columns to check.
+        threshold: Z-score threshold (3.0 = ~99.7% of data).
+
+    Returns:
+        Cleaned DataFrame, number of rows removed.
+    """
+    mask = pd.Series(True, index=df.index)
+    for col in columns:
+        z = np.abs((df[col] - df[col].mean()) / df[col].std())
+        mask &= z < threshold
+    return df[mask].copy(), (~mask).sum()
 ```
+
+**Outlier method selection:**
+
+| Method | When to use | Row impact |
+|--------|------------|------------|
+| `remove_outliers_iqr` | General-purpose, non-normal data | Removes rows |
+| `cap_outliers_iqr` | Preserve all rows, cap extreme values | No rows removed |
+| `remove_outliers_zscore` | Normal distributions, parametric analysis | Removes rows |
+| `clip_outliers` | Percentile-based clipping (arbitrary bounds) | No rows removed |
 
 **See:** `references/transformation_methods.md` for the full pre-model transformation catalog.
 

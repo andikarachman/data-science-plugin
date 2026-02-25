@@ -11,15 +11,18 @@ Preprocessing pipelines follow a standard order. Each step expects clean input f
 ```
 1. Validate input schema
 2. Deduplicate
-3. Handle structural missing data (drop high-missing columns/rows)
-4. Coerce types (string-to-numeric, date parsing)
-5. Normalize strings (whitespace, case)
-6. Remove outliers (IQR or percentile-based)
-7. Transform (resampling, format conversion)
-8. Validate output schema
+3. Handle structural missing data (drop high-missing columns/rows, drop constant columns)
+4. Impute missing values (median for numeric, mode for categorical, KNN for correlated)
+5. Coerce types (string-to-numeric, date parsing)
+6. Normalize strings (whitespace, case)
+7. Process text (extract numbers/emails, remove special characters)
+8. Replace placeholders (convert sentinel values to NaN)
+9. Handle outliers (IQR remove, IQR cap, Z-score remove, or percentile clip)
+10. Transform (resampling, format conversion)
+11. Validate output schema
 ```
 
-Not every step is needed for every dataset. The `pipeline-builder` agent assesses the data and recommends which steps to include.
+Not every step is needed for every dataset. The `pipeline-builder` agent assesses the data and recommends which steps to include. Imputation (step 4) comes after structural drops (step 3) -- no point imputing a column you will drop. Text processing (step 7) comes after string normalization (step 6) but before placeholder replacement (step 8).
 
 ## Configuration via Python Dicts
 
@@ -109,11 +112,12 @@ def route_columns(df):
 
 | Column Type | Applicable Steps |
 |-------------|-----------------|
-| Numeric | Outlier removal, range validation, coercion from string |
-| Categorical | String normalization, rare category handling, cardinality check |
+| Numeric | Median imputation, outlier handling (IQR remove/cap, Z-score, clip), range validation, coercion from string |
+| Categorical | Mode imputation, string normalization, rare category handling, cardinality check |
 | Temporal | Date parsing, timezone normalization, temporal sorting, resampling |
-| Text | Whitespace stripping, case normalization, encoding fixes |
+| Text | Text processing (extract numbers/email, remove special), whitespace stripping, case normalization |
 | ID-like | Skip transformations, preserve as-is or drop if not needed |
+| Mixed (correlated) | KNN imputation using correlated feature columns |
 
 ## Checkpointing
 
